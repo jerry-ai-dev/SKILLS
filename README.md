@@ -1,72 +1,81 @@
-# PyTorch Teacher — 入门深度学习 / PyTorch 的导师
+# SKILLS — 零算法基础自学大模型算法的 AI 教学仓库
 
-> 一位耐心的 AI 导师，带你从零开始系统学习 PyTorch 与深度学习。
+> 这是笔者**个人从 0 算法基础自学大模型算法**一路沉淀下来的 Skill 仓库。
+> 每一个子目录都是一个独立的 GitHub Copilot Agent Skill，配套教案、进度脚本、复习八股、阶段考试，让 AI 老师按固定流程带你从入门一路学到能做项目。
 
-## 简介
+---
 
-**PyTorch Teacher** 是一个专为深度学习初学者设计的 AI 教学技能（Skill）。  
-它以循序渐进的课程体系，结合讲解、代码练习、测验与总结，帮助你从零基础到掌握 Transformer、GPT 等前沿模型。
+## 为什么有这个仓库
 
-## 课程体系
+学大模型算法这一年多，书、视频、博客、源码笔者都试过一遍，最大的痛点是——**卡住的时候没人换个说法**。
+直到开始**让大模型当老师**，才真正学进去：公式讲得准、同一个概念可以换三四种讲法、而且不嫌你烦。
 
-| 课程 | 主题 |
-|------|------|
-| Lesson 01 | 张量基础（Tensor） |
-| Lesson 02 | 自动微分（Autograd） |
-| Lesson 03 | 神经网络模块（nn.Module） |
-| Lesson 04 | 模型训练流程 |
-| Lesson 05 | 数据加载与处理 |
-| Lesson 06 | 卷积神经网络（CNN） |
-| Lesson 07 | 序列模型（RNN/LSTM） |
-| Lesson 08 | 注意力机制（Attention） |
-| Lesson 09 | Transformer 架构 |
-| Lesson 10 | GPT 模型实现 |
-| Lesson 11 | 预训练模型使用 |
-| Lesson 12 | 模型微调（Fine-tuning） |
+但直接丢给 Copilot 一句"教我 GRPO"是不够的，它会讲得散、没主线、前后对不上。
+所以笔者把自己学过一遍的经验沉淀成了这套 Skill：**把大纲定死、把讲法定死、每节课自己先学一遍再上传**，保证 AI 老师每次产出都稳定。
 
-## 特性
+---
 
-- 每节课包含：讲解 → 代码练习 → 测验 → 总结
-- 自动跟踪学习进度，支持随时继续或复习
-- 适合有 Python 基础但没有深度学习经验的学习者
-- 涵盖从基础张量运算到 GPT 的完整学习路径
+## 学习路线：4 个阶段，从 0 到能做后训练项目
 
-## 使用方式
+笔者为自己规划了一条**从零基础到能独立完成后训练项目**的完整路线，共分 4 个阶段：
 
-在支持 GitHub Copilot Agent Skills 的环境中，说：
+| 阶段 | 名称 | 目标 | 对应 Skill / 产出 |
+|------|------|------|-------------------|
+| **第一阶段** | PyTorch 入门 | 打牢 Tensor / Autograd / nn.Module / 训练流程 / Transformer / 微调基础，从 Python 跨到会用 PyTorch 写模型 | [`pytorch-teacher/`](pytorch-teacher/) |
+| **第二阶段** | 后训练理论深化 | 把 RL、Policy Gradient、PPO、Reward Model、RLHF、GRPO、SFT 的原理、公式、代码全搞懂，最终读透 DeepSeek R1 论文 | [`post-training-teacher/`](post-training-teacher/) |
+| **第三阶段** | 开源项目研读 | 系统阅读 TRL、Open-R1、SimpleRL-Zoo 三个项目的源码，理解工业级后训练 pipeline 是怎么拼起来的 | `code-reading-teacher` Skill（待上传） |
+| **第四阶段** | 完成一个后训练项目 | 亲手跑一遍 SFT + GRPO 的完整 pipeline，把前三阶段所学真正落到训练脚本里 | 个人 repo（待上传） |
 
-- `学习 PyTorch` / `开始上课`
-- `继续学习` / `下一课`
-- `复习第X课`
-- `pytorch lesson`
+**走完 4 个阶段后，你会具备独立做一个完整后训练项目的能力**——对应到求职 JD 里那句"要求有强化学习 / RLHF 经验、熟悉 SFT 流程、理解 PPO/GRPO"，你就算是能对上号了。
 
-导师会自动根据你的进度继续教学。
+---
 
-## 适合人群
+## 当前仓库包含的 Skill
 
-- 有 Python 基础，想入门深度学习的开发者
-- 想系统学习 PyTorch 框架的学生
-- 希望了解 Transformer / GPT 原理的工程师
+### 🟢 [`pytorch-teacher/`](pytorch-teacher/) — 第一阶段：PyTorch 入门
+12 节正课 + 4 次考试，从张量一路讲到 GPT 实现与微调。面向**有 Python 基础但没接触过深度学习**的同学。详见 [pytorch-teacher/README.md](pytorch-teacher/README.md)。
+
+### 🟢 [`post-training-teacher/`](post-training-teacher/) — 第二阶段：后训练理论深化
+10 节正课 + 3 次考试 + 复习模式。RL → PPO → Reward Model → RLHF → GRPO → SFT → DeepSeek R1 主线。每节课 9 步流程 + 5 种教学风格（比喻 / 硬核 / 折中 / 工程 / 苏格拉底）可切换。详见 [post-training-teacher/README.md](post-training-teacher/README.md)。
+
+### 🟡 `code-reading-teacher/` — 第三阶段：开源项目研读（待上传）
+
+### 🟡 第四阶段项目（待上传）
+
+---
+
+## 快速开始
+
+1. 在支持 GitHub Copilot Agent Skills 的 VS Code 环境中打开本仓库
+2. 从第一阶段开始，对 Copilot 说：
+   > - `学习 PyTorch` / `开始上课` → 进入第一阶段
+   > - `开始后训练` / `学习 PPO` / `学习 GRPO` → 进入第二阶段
+3. 老师会自动读取对应 Skill 的 `SKILL.md`、加载进度、从上次中断处继续
+
+> 模型推荐：笔者主力使用 **Claude Opus 4.6**，讲解最有层次、类比最贴切。Sonnet 4.6 速度快可替代；GPT 系列话偏多。
+
+---
 
 ## 目录结构
 
 ```
-pytorch-teacher/
-├── SKILL.md              # Skill 配置与触发规则
-├── README.md             # 本文件
-├── progress.json         # 学习进度记录
-├── references/           # 课程参考资料
-│   ├── curriculum.md     # 课程大纲
-│   ├── lesson01_tensor.md
-│   ├── ...
-│   └── exam04_final.md   # 期末考试
-└── scripts/
-    └── progress.py       # 进度管理脚本
+SKILLS/
+├── README.md                 
+├── pytorch-teacher/          ← 第一阶段 Skill
+│   ├── SKILL.md
+│   ├── README.md
+│   ├── references/
+│   └── scripts/
+└── post-training-teacher/    ← 第二阶段 Skill
+    ├── SKILL.md
+    ├── README.md
+    ├── references/
+    └── scripts/
 ```
 
 ---
 
-⭐ 如果这个项目对你有帮助，欢迎 Star！
+⭐ 如果这个仓库对你有帮助，欢迎 Star！后续第三、第四阶段也会陆续更新到这里。
 
 ---
 
