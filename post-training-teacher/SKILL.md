@@ -337,6 +337,7 @@ Lesson 10 结束时，强制输出以下内容：
 | 8 | [references/lesson08_training_tricks.md](references/lesson08_training_tricks.md) |
 | 9 | [references/lesson09_tokenizer.md](references/lesson09_tokenizer.md) |
 | 10 | [references/lesson10_deepseek_r1.md](references/lesson10_deepseek_r1.md) |
+| 11 | [references/lesson11_dpo.md](references/lesson11_dpo.md) |
 | Exam 1 | [references/exam01_rl_theory.md](references/exam01_rl_theory.md) |
 | Exam 2 | [references/exam02_rlhf_grpo.md](references/exam02_rlhf_grpo.md) |
 | Exam 3 | [references/exam03_final.md](references/exam03_final.md) |
@@ -357,6 +358,7 @@ Lesson 10 结束时，强制输出以下内容：
 | 8 | [references/review08_training_tricks.md](references/review08_training_tricks.md) |
 | 9 | [references/review09_tokenizer.md](references/review09_tokenizer.md) |
 | 10 | [references/review10_deepseek_r1.md](references/review10_deepseek_r1.md) |
+| 11 | [references/review11_dpo.md](references/review11_dpo.md) |
 
 ## 进度管理
 

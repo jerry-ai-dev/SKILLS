@@ -1,6 +1,6 @@
 # 阶段三：开源项目研读 — 课程大纲
 
-共 13 课（含 3 次考试），分 3 个阶段。每个阶段：代码精读 → 关键模块分析 → 调试观察 / 参数修改 → 阶段考试。
+共 14 课（含 3 次考试），分 3 个阶段。每个阶段：代码精读 → 关键模块分析 → 调试观察 / 参数修改 → 阶段考试。其中 Lesson 11（TRL DPOTrainer）归属阶段一 TRL 库，放在 Lesson 3 之后讲解。
 
 阶段考试不考纯手写完整代码。考试重点是：读懂开源代码主干、把源码映射到训练原理、审查 AI 生成的代码 / 配置、给出最小修改建议。
 
@@ -8,7 +8,7 @@
 
 ---
 
-## 第一阶段：TRL 库精读 (Lesson 1-3 + Exam 1)
+## 第一阶段：TRL 库精读 (Lesson 1-3, 11 + Exam 1)
 
 ### Lesson 1: TRL 库全景 & SFTTrainer 源码
 - TRL 库的定位：HuggingFace 的后训练一站式工具
@@ -35,10 +35,20 @@
 - 训练日志与监控：WandB 集成、关键指标解读
 - **动手**：审查并修改 AI 生成的数学推理 reward 函数，验证接口、答案对齐和容错逻辑
 
+### Lesson 11: TRL DPOTrainer 源码精读
+- DPOTrainer 在 TRL 仓库中的定位：`trl/trainer/dpo_trainer.py` / `dpo_config.py`
+- 偏好数据格式：`prompt / chosen / rejected` 三字段与新版 messages 结构
+- 调用链：`train` → `training_step` → `concatenated_forward` → `dpo_loss`
+- `_get_batch_logps`：per-token log_prob 的 masked sum（对应阶段二 Lesson 11 公式）
+- `dpo_loss` 中的 `loss_type` 开关：DPO / IPO / KTO / SimPO 在源码层面的差异
+- DPOConfig 关键参数读解：`beta` / `loss_type` / `reference_free` / `max_prompt_length`
+- DPOTrainer vs GRPOTrainer 的工程取舍：为什么 DPO 几乎"免费"但不能涌现推理能力
+- **动手**：CPU 上用 `Qwen2.5-0.5B` + 10 条偏好数据跑一个 `max_steps=2` 的 DPO toy，观察 `rewards/margins`
+
 ### 📝 Exam 1: TRL 库阶段考试
-- 覆盖 Lesson 1-3 全部内容
+- 覆盖 Lesson 1-3、Lesson 11 全部内容（含 DPOTrainer 源码）
 - 10 题（源码定位与调用链 3 + 原理映射与运行现象解释 3 + AI 生成代码 / 配置审查 3 + 阶段四迁移清单 1），满分 100 分
-- 不要求从零手写完整 SFT / GRPO 脚本或 reward 函数；重点考是否能读懂代码、发现问题、修改参数并解释原因
+- 不要求从零手写完整 SFT / GRPO / DPO 脚本或 reward 函数；重点考是否能读懂代码、发现问题、修改参数并解释原因
 
 ---
 
@@ -109,7 +119,7 @@
 - **动手**：输出一份完整的项目计划书
 
 ### 🎓 Exam 3: 期末综合考试
-- 覆盖 Lesson 1-10 全部内容
+- 覆盖 Lesson 1-11 全部内容（含 DPOTrainer）
 - 15 题（代码阅读 5 + 架构理解 4 + 实战设计 3 + 对比分析 3），满分 100 分
 - 考完颁发成绩单，正式进入阶段四（实战与论文撰写）
 - 期末重点考完整 pipeline 的阅读、诊断、参数审查与项目规划能力，不考闭卷手写训练框架

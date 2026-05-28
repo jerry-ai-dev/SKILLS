@@ -108,3 +108,15 @@
 | 涌现现象 (Emergent Behavior) | ⭐⭐ | 训练过程中出现训练数据中从未出现的新行为 |
 | Rejection Sampling | ⭐⭐ | 从模型采样大量结果，只保留满足条件的，作为新训练数据 |
 | Pass@K 评估指标 | ⭐ | 生成 K 个答案，至少一个正确即算通过，衡量推理能力 |
+
+---
+
+## Lesson 11: DPO 直接偏好优化
+
+| 概念 | 难度 | 一句话简介 |
+|------|------|-----------|
+| Bradley-Terry 模型（复习） | ⭐⭐ | Lesson 4 学过：$P(y_w \succ y_l) = \sigma(r_w - r_l)$ |
+| KL 约束最优策略 | ⭐⭐⭐ | 带 KL 罚项的 reward 最大化问题有闭式最优解 $\pi^* \propto \pi_{\text{ref}} \exp(r/\beta)$ |
+| 隐式 reward | ⭐⭐ | DPO 不用显式 RM，用 $\beta \log(\pi_\theta/\pi_{\text{ref}})$ 当 reward |
+| 离线 vs 在线 RL | ⭐⭐ | DPO 是离线监督；PPO/GRPO 是在线采样 |
+| `logsigmoid` 数值稳定性 | ⭐ | 实现 BT/DPO loss 时必须用 `F.logsigmoid` 而不是 `log(sigmoid(.))` |

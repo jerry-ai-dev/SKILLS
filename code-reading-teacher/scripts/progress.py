@@ -2,7 +2,7 @@
 阶段三：开源项目研读 - 学习进度管理脚本
 用法：
   python progress.py show                       # 查看当前进度
-  python progress.py complete <N>               # 标记第 N 课完成（N=0-10，0 为导论课）
+  python progress.py complete <N>               # 标记第 N 课完成（N=0-11，0 为导论课，11 为 DPOTrainer 补充课）
   python progress.py complete exam<N> [score]  # 标记第 N 次考试完成，可附分数
   python progress.py reset <N>                  # 重置第 N 课
   python progress.py reset-all                  # 重置所有进度
@@ -26,17 +26,18 @@ LESSONS = {
     8:  "SimpleRL-Zoo 小模型 RL 实验",
     9:  "通用模式提炼 & 代码模板",
     10: "实战规划：你的 SFT+GRPO Pipeline",
+    11: "TRL DPOTrainer 源码精读",
 }
 
 EXAMS = {
-    "exam1": {"name": "📝 阶段考试 1: TRL 库", "after": 3, "covers": "Lesson 1-3"},
+    "exam1": {"name": "📝 阶段考试 1: TRL 库", "after": 11, "covers": "Lesson 1-3, 11"},
     "exam2": {"name": "📝 阶段考试 2: Open-R1", "after": 7, "covers": "Lesson 4-7"},
-    "exam3": {"name": "🎓 期末综合考试", "after": 10, "covers": "Lesson 1-10"},
+    "exam3": {"name": "🎓 期末综合考试", "after": 10, "covers": "Lesson 1-11"},
 }
 
 STAGES = {
     "导论":                          [0],
-    "第一阶段 TRL 库精读":       [1, 2, 3, "exam1"],
+    "第一阶段 TRL 库精读":       [1, 2, 3, 11, "exam1"],
     "第二阶段 Open-R1 深度拆解":  [4, 5, 6, 7, "exam2"],
     "第三阶段 整合与实战规划":     [8, 9, 10, "exam3"],
 }

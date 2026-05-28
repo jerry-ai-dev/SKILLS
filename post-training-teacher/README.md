@@ -73,7 +73,7 @@
 
 ## 二、本 Skill 学什么：课程大纲
 
-共 **10 节正课 + 3 次考试**，分 3 个阶段。完整大纲见 [references/curriculum.md](references/curriculum.md)。
+共 **10 节正课 + 1 节 RLHF 补充课（Lesson 11: DPO） + 3 次考试**，分 3 个阶段。完整大纲见 [references/curriculum.md](references/curriculum.md)。
 
 ### 阶段一：RL 理论基础（Lesson 1–3 + Exam 1）
 - **Lesson 1** 强化学习基础 & MDP
@@ -81,12 +81,13 @@
 - **Lesson 3** PPO 算法深入（Importance Sampling / Clip / GAE / Actor-Critic）
 - **Exam 1** RL 理论阶段考试
 
-### 阶段二：RLHF 完整流程（Lesson 4–7 + Exam 2）
+### 阶段二：RLHF 完整流程（Lesson 4–7, 11 + Exam 2）
 - **Lesson 4** Reward Model（Bradley-Terry / 偏好损失 / Reward Hacking）
 - **Lesson 5** RLHF 三阶段全流程（SFT → RM → RL + KL 惩罚）
 - **Lesson 6** GRPO 算法（组内相对奖励，DeepSeek R1 用的那个）
 - **Lesson 7** SFT 工程实践（Loss Masking / Packing / `trl.SFTTrainer`）
-- **Exam 2** RLHF 阶段考试
+- **Lesson 11** DPO 直接偏好优化（跳过 RM+PPO 的偏好对齐路线，含 IPO / KTO / ORPO / SimPO 变体一览）
+- **Exam 2** RLHF 阶段考试（DPO 相关题已并入本场考试）
 
 ### 阶段三：工程与前沿（Lesson 8–10 + Exam 3）
 - **Lesson 8** 梯度累积 & 混合精度训练（bf16 / fp16 / GradScaler）

@@ -2,7 +2,7 @@
 
 ## 考试定位
 
-本考试覆盖 Lesson 1-3（`SFTTrainer`、`GRPOTrainer`、数据流水线与 Reward 设计）。
+本考试覆盖 Lesson 1-3（`SFTTrainer`、`GRPOTrainer`、数据流水线与 Reward 设计）以及 Lesson 11（`DPOTrainer` 源码精读）。
 
 考试目标不是考学生能不能从零手写训练代码，而是考 4 件事：
 
@@ -13,11 +13,12 @@
 
 ## 考试形式
 
-- **题数**：10 题，满分 100 分；
+- **题数**：11 题，原始总分 110，按 100 折算；
 - **题型分布**：
   - 源码定位与调用链：3 题 × 10 分；
   - 原理映射与运行现象解释：3 题 × 10 分；
-  - AI 生成代码 / 配置审查：3 题 × 10 分；
+  - AI 生成代码 / 配置审查：3 题 × 10 分（含 1 道 DPOTrainer 审查）；
+  - DPOTrainer 源码专题：1 题 × 10 分；
   - 阶段四迁移清单：1 题 × 10 分；
 - **允许**：查源码、查课程笔记、使用 AI 生成候选代码；
 - **不考**：纯手写完整训练脚本、纯手写完整 reward 函数、背诵 API 参数；
@@ -249,6 +250,49 @@ max_completion_length = 1024
 
 ---
 
+## C-bis. DPOTrainer 专题（1 × 10 分 = 10 分）
+
+### Q9b【DPOTrainer 源码定位 + 配置审查，10 分】
+
+给定一段 AI 生成的 DPO 训练脚本：
+
+```python
+from trl import DPOTrainer, DPOConfig
+
+trainer = DPOTrainer(
+    model=model,
+    ref_model=model,                         # 价为与 policy 同一个对象
+    args=DPOConfig(
+        output_dir="./out",
+        beta=0.0,
+        loss_type="simpo",
+        reference_free=False,
+        max_length=128,
+        max_prompt_length=64,
+        bf16=True,                           # CPU 试跑
+    ),
+    train_dataset=Dataset.from_list([
+        {"prompt": "Q", "response": "A1"}    # 字段
+    ]),
+    processing_class=tokenizer,
+)
+trainer.train()
+```
+
+要求：
+
+1. 在 TRL 源码中定位 `DPOTrainer.dpo_loss`（或同等名称）的文件与方法名，并指出 `loss_type` 变体在该函数中怎么实现（一句话说明 DPO / IPO / SimPO 的区别）；
+2. 指出上面脚本中至少 **4 个** 会导致训练跳出、报错或训出错误结果的问题；
+3. 给出适合 CPU toy run 的最小修改建议（不要求从零重写）。
+
+**评分要点**：
+
+- 能定位到 `trl/trainer/dpo_trainer.py` 里的 `dpo_loss`，说清 `loss_type` 如何在 if-elif 分支中选出对应 loss；
+- 能指出至少 4 个问题：`ref_model=model` 让 ref 跟着更新、`beta=0.0` 令 KL 项失效且 DPO 退化、`loss_type="simpo"` 与 `reference_free=False` 冲突、`bf16=True` 在 CPU 会崩、数据字段应为 `chosen / rejected` 不是 `response`；
+- 能给出最小修改：单独加载 ref、`beta=0.1`、选一致的 `loss_type`、关 `bf16`、字段改为 `prompt/chosen/rejected`。
+
+---
+
 ## D. 阶段四迁移清单（1 × 10 分 = 10 分）
 
 ### Q10【把 TRL 阅读结果迁移到自己的项目，10 分】
@@ -270,9 +314,10 @@ max_completion_length = 1024
 
 ## 考试通过标准
 
-- **通过**：≥ 70 分，且 Q1-Q3 中至少 2 题通过，Q7-Q9 中至少 2 题通过；
-- **优秀**：≥ 90 分，能够主动指出源码 / 配置和阶段二理论之间的对应关系；
+- **通过**：原始总分 ≥ 77（折算 70），且 Q1-Q3 中至少 2 题通过，Q7-Q9b 中至少 3 题通过；
+- **优秀**：原始总分 ≥ 99（折算 90），能够主动指出源码 / 配置和阶段二理论之间的对应关系；
 - **未通过后的复习路径**：
   - Q1/Q2/Q4 弱：回看 Lesson 1 与 Lesson 3 的数据处理 / label mask；
   - Q3/Q5/Q6/Q9 弱：回看 Lesson 2 的 GRPO 主流程、advantage、KL、采样参数；
+  - Q9b 弱：回看 Lesson 11 的 DPOTrainer 源码地图与 `loss_type` 变体表；
   - Q7/Q8/Q10 弱：回看 Lesson 1-3 的工程参数表、reward 接口、阶段四 checklist。

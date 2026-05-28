@@ -57,13 +57,14 @@
 
 ## 二、本 Skill 学什么：课程大纲
 
-共 **10 节正课 + 3 次考试**，分 3 个阶段。完整大纲见 [references/curriculum.md](references/curriculum.md)。
+共 **10 节正课 + 1 节 TRL 补充课（Lesson 11: DPOTrainer） + 3 次考试**，分 3 个阶段。完整大纲见 [references/curriculum.md](references/curriculum.md)。
 
-### 阶段一：TRL 库精读（Lesson 1–3 + Exam 1）
+### 阶段一：TRL 库精读（Lesson 1–3, 11 + Exam 1）
 - **Lesson 1** TRL 库全景 & `SFTTrainer` 源码（数据 collator、`SFTConfig`）
 - **Lesson 2** `GRPOTrainer` 源码精读（采样 / 优势计算 / PPO-Clip / per-token KL / ref_model）
 - **Lesson 3** TRL 数据流水线 & Reward 设计（chat template、reward 函数签名、规则奖励 vs RM）
-- **Exam 1** TRL 阶段考试（源码定位 + 原理映射 + AI 生成代码审查）
+- **Lesson 11** TRL `DPOTrainer` 源码精读（偏好偏对数据、`concatenated_forward`、`dpo_loss` 与 `loss_type` 变体开关）
+- **Exam 1** TRL 阶段考试（源码定位 + 原理映射 + AI 生成代码审查，含 DPO 题）
 
 ### 阶段二：Open-R1 深度拆解（Lesson 4–7 + Exam 2）
 - **Lesson 4** Open-R1 项目架构总览（目录结构、配置系统、与 TRL 的关系）

@@ -1,6 +1,6 @@
 # 后训练理论深化课程大纲
 
-共 13 课（含 3 次考试），分 3 个阶段。每个阶段：讲解课 → 代码练习 → 测验 → 阶段考试。
+共 14 课（含 3 次考试），分 3 个阶段。每个阶段：讲解课 → 代码练习 → 测验 → 阶段考试。其中 Lesson 11（DPO）归属第二阶段 RLHF，但放在 Lesson 7 之后讲解。
 
 **前置要求**：完成 PyTorch 入门课程（阶段一）Lesson 1-12，能读懂 Transformer 代码。
 
@@ -39,7 +39,7 @@
 
 ---
 
-## 第二阶段：RLHF 完整流程 (Lesson 4-7 + Exam 2)
+## 第二阶段：RLHF 完整流程 (Lesson 4-7, 11 + Exam 2)
 
 ### Lesson 4: Reward Model 奖励模型
 - 为什么需要奖励模型？人工标注偏好数据的方式
@@ -75,9 +75,18 @@
 - HuggingFace `Trainer` 与 `trl.SFTTrainer` 的核心参数
 - **练习**：用 `trl.SFTTrainer` 微调一个 mini 模型（TinyLlama 或 GPT-2）
 
+### Lesson 11: DPO 直接偏好优化（与 IPO / KTO / ORPO / SimPO 变体）
+- 为什么需要 DPO：跳过 Reward Model + PPO，用偏好数据直接训练
+- 从 RLHF 带 KL 约束目标推导 DPO 闭式解（最优策略 → 隐式 reward → BT loss）
+- DPO Loss 公式与 "隐式 reward" $\hat r_\theta = \beta \log(\pi_\theta / \pi_{\text{ref}})$
+- 训练三件套：偏好数据 $(x, y_w, y_l)$ + policy + ref_model；β 超参取舍
+- 与 PPO / GRPO 横向对比：何时该选 DPO，何时该选 GRPO（R1 为什么用 GRPO 不用 DPO）
+- 主流变体一览：IPO（抗噪）/ KTO（单边）/ ORPO（去 ref）/ SimPO（去 ref + 长度归一）
+- **练习**：实现 mini DPO loss（约 30 行），观察 `reward_margin` / `reward_acc` 训练曲线
+
 ### 📝 Exam 2: RLHF 完整流程阶段考试
-- 覆盖 Lesson 4-7 全部内容
-- 10 题（选择 3 + 公式推导 3 + 代码题 4），满分 100 分
+- 覆盖 Lesson 4-7、Lesson 11 全部内容
+- 题目分布原比例不变，DPO 相关题已并入本场考试（不单独设 DPO 考试）
 
 ---
 
@@ -110,6 +119,6 @@
 - **练习**：用表格整理 R1 与 InstructGPT 训练流程的异同
 
 ### 🎓 Exam 3: 期末综合考试
-- 覆盖 Lesson 1-10 全部内容
+- 覆盖 Lesson 1-11 全部内容（含 DPO）
 - 15 题（选择 4 + 公式推导 4 + 代码题 4 + 开放设计题 3），满分 100 分
 - 考完颁发成绩单，总结后训练学习历程，规划阶段三（开源项目研读）

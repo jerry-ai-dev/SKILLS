@@ -1,7 +1,7 @@
 # Exam 3: 期末综合考试
 
 ## 考试说明
-- **范围**：Lesson 1-10 全部内容
+- **范围**：Lesson 1-11 全部内容（含 Lesson 11 DPOTrainer）
 - **题数**：15 题，满分 100 分
 - **分布**：
   - 代码阅读题 5 道（每题 7 分 = 35 分）
@@ -125,17 +125,17 @@ GRPO 训练中需要同时加载策略模型和参考模型。有哪些方法可
 ## 对比分析题（2 × 8分 = 16分）
 
 ### Q13【对比分析，8分】
-对比 SFTTrainer 和 GRPOTrainer 的 5 个核心差异（训练目标、数据需求、模型数量、loss 计算、超参数）。
+对比 SFTTrainer、GRPOTrainer 与 DPOTrainer 在 5 个维度上的核心差异（训练目标、数据需求、模型数量、loss 计算、关键超参）。
 
 **答案**：
 
-| 维度 | SFTTrainer | GRPOTrainer |
-|------|-----------|-------------|
-| 训练目标 | 模仿标注数据 | 最大化奖励 |
-| 数据需求 | prompt + answer | 只需 prompt |
-| 模型数量 | 1 个 | 2 个（策略+参考） |
-| Loss | cross_entropy | PPO-Clip + KL |
-| 关键超参 | lr, epochs | G, β, ε, temperature |
+| 维度 | SFTTrainer | GRPOTrainer | DPOTrainer |
+|------|-----------|-------------|------------|
+| 训练目标 | 模仿标注数据 | 最大化奖励 | 提高 chosen 相对于 rejected 的偏好概率 |
+| 数据需求 | prompt + answer | 只需 prompt | prompt + chosen + rejected |
+| 模型数量 | 1 个 | 2 个（策略+参考） | 2 个（策略+参考，reference_free 时 1 个） |
+| Loss | cross_entropy | PPO-Clip + KL | `-logsigmoid(β * (Δ_policy - Δ_ref))` |
+| 关键超参 | lr, epochs | G, β, ε, temperature | β, loss_type, max_length |
 
 （每行 1.6分）
 

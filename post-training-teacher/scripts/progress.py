@@ -2,7 +2,7 @@
 后训练理论深化 - 学习进度管理脚本
 用法：
   python progress.py show                       # 查看当前进度
-  python progress.py complete <N>               # 标记第 N 课完成（N=1-10）
+  python progress.py complete <N>               # 标记第 N 课完成（N=1-11）
   python progress.py complete exam<N> [score]  # 标记第 N 次考试完成，可附分数
   python progress.py reset <N>                  # 重置第 N 课
   python progress.py reset-all                  # 重置所有进度
@@ -25,17 +25,18 @@ LESSONS = {
     8:  "梯度累积 & 混合精度训练",
     9:  "BPE Tokenizer 原理",
     10: "DeepSeek R1 论文精读",
+    11: "DPO 直接偏好优化",
 }
 
 EXAMS = {
     "exam1": {"name": "📝 阶段考试 1: RL 理论基础", "after": 3, "covers": "Lesson 1-3"},
-    "exam2": {"name": "📝 阶段考试 2: RLHF 完整流程", "after": 7, "covers": "Lesson 4-7"},
-    "exam3": {"name": "🎓 期末综合考试", "after": 10, "covers": "Lesson 1-10"},
+    "exam2": {"name": "📝 阶段考试 2: RLHF 完整流程", "after": 11, "covers": "Lesson 4-7, 11"},
+    "exam3": {"name": "🎓 期末综合考试", "after": 10, "covers": "Lesson 1-11"},
 }
 
 STAGES = {
     "第一阶段 RL 理论基础":    [1, 2, 3, "exam1"],
-    "第二阶段 RLHF 完整流程":  [4, 5, 6, 7, "exam2"],
+    "第二阶段 RLHF 完整流程":  [4, 5, 6, 7, 11, "exam2"],
     "第三阶段 工程与前沿":      [8, 9, 10, "exam3"],
 }
 

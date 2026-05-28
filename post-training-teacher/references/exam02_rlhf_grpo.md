@@ -1,7 +1,7 @@
 # Exam 2: RLHF 完整流程阶段考试
 
 ## 考试说明
-- **范围**：Lesson 4-7（Reward Model、RLHF、GRPO、SFT）
+- **范围**：Lesson 4-7、Lesson 11（Reward Model、RLHF、GRPO、SFT、DPO）
 - **题数**：10 题，满分 100 分
 - **分布**：选择题 3 道（每题 8 分）+ 推导/简答题 3 道（每题 12 分）+ 代码题 4 道（每题 8 分）
 - **规则**：逐题作答，建议先不看笔记
@@ -63,24 +63,29 @@ $$\mathcal{L}_\text{GRPO} = -\frac{1}{G}\sum_{i=1}^G \frac{1}{|y_i|}\sum_{t=1}^{
 ---
 
 ### Q5【简答，12分】
-描述 RLHF 完整训练的三个阶段，以及每个阶段的输入数据、损失函数、输出是什么？
+描述 RLHF 完整训练的三个阶段，以及每个阶段的输入数据、损失函数、输出是什么？另外，说明 **DPO** 路线怎么把后两个阶段合并成一个。
 
 **答案（评分标准）**：
 
-**阶段1 SFT**（4分）：
+**阶段1 SFT**（3分）：
 - 输入：(prompt, high-quality response) 对，人工标注
 - 损失：Cross-Entropy Loss（只在 response 部分）
 - 输出：SFT 模型 $\pi_\text{SFT}$
 
-**阶段2 RM 训练**（4分）：
+**阶段2 RM 训练**（3分）：
 - 输入：(prompt, chosen_response, rejected_response) 三元组
 - 损失：$-\log\sigma(r_w - r_l)$（Bradley-Terry preference loss）
 - 输出：奖励模型 $r_\phi$
 
-**阶段3 PPO/GRPO RL**（4分）：
+**阶段3 PPO/GRPO RL**（3分）：
 - 输入：无标注 prompt，用 RM 打分
 - 损失：PPO/GRPO Clip Loss + KL 惩罚
 - 输出：对齐后的策略 $\pi_\theta^*$
+
+**DPO 合并 RM + RL**（3分）：
+DPO 利用带 KL 约束的 RLHF 最优策略有闭式解 $\pi^* \propto \pi_{\text{ref}}\exp(r/\beta)$，将其反解出 $r = \beta\log(\pi/\pi_{\text{ref}}) + C$，代回 Bradley-Terry 损失后配分函数 $C$ 抵消，得到单一损失：
+$$\mathcal{L}_{\text{DPO}} = -\mathbb{E}\log\sigma\big[\beta(\log\tfrac{\pi_\theta(y_w)}{\pi_{\text{ref}}(y_w)} - \log\tfrac{\pi_\theta(y_l)}{\pi_{\text{ref}}(y_l)})\big]$$
+以上三件事：不需要独立 RM、不需要在线采样、直接用偏好对训练。
 
 ---
 
@@ -148,11 +153,26 @@ class RewardModel(nn.Module):
 ---
 
 ### Q10【代码，8分】
-以下 `preference_loss` 代码中，如果 `reward_chosen` 和 `reward_rejected` 的顺序传反了（即把差的回答传给 chosen，好的回答传给 rejected），训练结果会怎样？写出推导过程。
+以下 DPO loss 实现有 **3 个 bug**，全部找出并修复：
 
 ```python
-def preference_loss(reward_chosen, reward_rejected):
-    return -F.logsigmoid(reward_chosen - reward_rejected).mean()
+def dpo_loss(policy_logp_w, policy_logp_l, ref_logp_w, ref_logp_l, beta):
+    logits = beta * (policy_logp_w / policy_logp_l) - beta * (ref_logp_w / ref_logp_l)
+    loss = torch.log(torch.sigmoid(logits)).mean()
+    return loss
 ```
 
-**答案**：若传反了，loss = $-\log\sigma(r_\text{bad} - r_\text{good})$。训练时模型会朝着让 $r_\text{bad} > r_\text{good}$ 的方向更新，即学习给差回答更高分（4分）。这是一个严重的数据标注方向错误，模型会"学反"，对所有问题给出更差的回答评估，实际效果比不训练还差（4分）。
+**答案**：
+1. **概率比要在 log 空间用减法**（3分）：`policy_logp_w / policy_logp_l` 是对 log 概率直接除，没有物理意义。应为 `(policy_logp_w - policy_logp_l) - (ref_logp_w - ref_logp_l)`。
+2. **`ref_logp` 必须 detach**（2分）：参考模型冻结，梯度不应反传到它。应在 `ref_logp_w.detach()` / `ref_logp_l.detach()`。
+3. **损失要取负号，且应用 `F.logsigmoid` 保证数值稳定**（3分）：`loss = -F.logsigmoid(logits).mean()`。写成 `log(sigmoid(.))` 在 logits 偏负时容易下溢。
+
+修复后版本：
+```python
+def dpo_loss(policy_logp_w, policy_logp_l, ref_logp_w, ref_logp_l, beta):
+    logits = beta * (
+        (policy_logp_w - policy_logp_l)
+        - (ref_logp_w.detach() - ref_logp_l.detach())
+    )
+    return -F.logsigmoid(logits).mean()
+```

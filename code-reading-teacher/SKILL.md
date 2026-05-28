@@ -353,6 +353,7 @@ Lesson 0 是阶段三的**第一节课**，也是唯一一节**纯讲解、无�
 | 8 | [references/lesson08_simplerl_zoo.md](references/lesson08_simplerl_zoo.md) |
 | 9 | [references/lesson09_patterns_templates.md](references/lesson09_patterns_templates.md) |
 | 10 | [references/lesson10_project_plan.md](references/lesson10_project_plan.md) |
+| 11 | [references/lesson11_trl_dpo.md](references/lesson11_trl_dpo.md) |
 | Exam 1 | [references/exam01_trl.md](references/exam01_trl.md) |
 | Exam 2 | [references/exam02_openr1.md](references/exam02_openr1.md) |
 | Exam 3 | [references/exam03_final.md](references/exam03_final.md) |
