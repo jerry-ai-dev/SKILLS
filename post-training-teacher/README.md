@@ -60,7 +60,7 @@
 |------|------|------|-------------------|
 | 第一步 | **PyTorch 入门** | 打牢 Tensor / Autograd / Transformer / 微调基础 | `pytorch-teacher` Skill |
 | 第二步 | **后训练理论深化**（👈 当前 Skill） | 把 RL、PPO、GRPO、RLHF、SFT 的原理、公式、代码全部搞懂，最终读透 DeepSeek R1 | `post-training-teacher` Skill |
-| 第三步 | **开源项目研读** | 系统阅读 TRL、Open-R1、SimpleRL-Zoo 三个项目的源码，理解工业级 pipeline | `code-reading` Skill（待进行） |
+| 第三步 | **开源项目研读** | 系统阅读 TRL、Open-R1、SimpleRL-Zoo 三个项目的源码，理解工业级 pipeline | `code-reading-teacher` Skill ✅ |
 | 第四步 | **完成一个后训练项目** | 亲手跑一遍 SFT + GRPO 的完整 pipeline，把前三阶段所学真正落到训练脚本里 | 个人 repo（待进行） |
 
 ### 4 个阶段的最终目标

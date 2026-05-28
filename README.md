@@ -23,7 +23,7 @@
 |------|------|------|-------------------|
 | **第一阶段** | PyTorch 入门 | 打牢 Tensor / Autograd / nn.Module / 训练流程 / Transformer / 微调基础，从 Python 跨到会用 PyTorch 写模型 | [`pytorch-teacher/`](pytorch-teacher/) |
 | **第二阶段** | 后训练理论深化 | 把 RL、Policy Gradient、PPO、Reward Model、RLHF、GRPO、SFT 的原理、公式、代码全搞懂，最终读透 DeepSeek R1 论文 | [`post-training-teacher/`](post-training-teacher/) |
-| **第三阶段** | 开源项目研读 | 系统阅读 TRL、Open-R1、SimpleRL-Zoo 三个项目的源码，理解工业级后训练 pipeline 是怎么拼起来的 | `code-reading-teacher` Skill（待上传） |
+| **第三阶段** | 开源项目研读 | 系统阅读 TRL、Open-R1、SimpleRL-Zoo 三个项目的源码，理解工业级后训练 pipeline 是怎么拼起来的 | [`code-reading-teacher/`](code-reading-teacher/) |
 | **第四阶段** | 完成一个后训练项目 | 亲手跑一遍 SFT + GRPO 的完整 pipeline，把前三阶段所学真正落到训练脚本里 | 个人 repo（待上传） |
 
 **走完 4 个阶段后，你会具备独立做一个完整后训练项目的能力**——对应到求职 JD 里那句"要求有强化学习 / RLHF 经验、熟悉 SFT 流程、理解 PPO/GRPO"，你就算是能对上号了。
@@ -38,7 +38,8 @@
 ### 🟢 [`post-training-teacher/`](post-training-teacher/) — 第二阶段：后训练理论深化
 10 节正课 + 3 次考试 + 复习模式。RL → PPO → Reward Model → RLHF → GRPO → SFT → DeepSeek R1 主线。每节课 9 步流程 + 5 种教学风格（比喻 / 硬核 / 折中 / 工程 / 苏格拉底）可切换。详见 [post-training-teacher/README.md](post-training-teacher/README.md)。
 
-### 🟡 `code-reading-teacher/` — 第三阶段：开源项目研读（待上传）
+### 🟢 [`code-reading-teacher/`](code-reading-teacher/) — 第三阶段：开源项目研读
+10 节正课 + 3 次考试。带你系统读透 **TRL、Open-R1、SimpleRL-Zoo** 三个主流后训练仓库，从 `SFTTrainer/GRPOTrainer` 的核心实现、到 Open-R1 的训练入口与奖励函数、再到轻量 RL pipeline 的最小骨架。提供两套教学流程（库代码 / 入口脚本），严格限定普通笔记本可跑（CPU 或 ≤ 8GB 显存）。详见 [code-reading-teacher/README.md](code-reading-teacher/README.md)。
 
 ### 🟡 第四阶段项目（待上传）
 
@@ -50,6 +51,7 @@
 2. 从第一阶段开始，对 Copilot 说：
    > - `学习 PyTorch` / `开始上课` → 进入第一阶段
    > - `开始后训练` / `学习 PPO` / `学习 GRPO` → 进入第二阶段
+   > - `阶段三` / `读代码` / `TRL` / `Open-R1` → 进入第三阶段
 3. 老师会自动读取对应 Skill 的 `SKILL.md`、加载进度、从上次中断处继续
 
 > 模型推荐：笔者主力使用 **Claude Opus 4.6**，讲解最有层次、类比最贴切。Sonnet 4.6 速度快可替代；GPT 系列话偏多。
@@ -66,7 +68,12 @@ SKILLS/
 │   ├── README.md
 │   ├── references/
 │   └── scripts/
-└── post-training-teacher/    ← 第二阶段 Skill
+├── post-training-teacher/    ← 第二阶段 Skill
+│   ├── SKILL.md
+│   ├── README.md
+│   ├── references/
+│   └── scripts/
+└── code-reading-teacher/     ← 第三阶段 Skill
     ├── SKILL.md
     ├── README.md
     ├── references/
@@ -75,7 +82,7 @@ SKILLS/
 
 ---
 
-⭐ 如果这个仓库对你有帮助，欢迎 Star！后续第三、第四阶段也会陆续更新到这里。
+⭐ 如果这个仓库对你有帮助，欢迎 Star！后续第四阶段也会陆续更新到这里。
 
 ---
 
